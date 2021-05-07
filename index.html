@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <title>Game Of Thrones</title>
+
+  <script>
+
+    $(document).ready(function () {
+
+      const url = "https://anapioficeandfire.com/api/houses/"
+      const idStark = 362;
+      const idBaratheon = 17;
+      const idLannister = 229;
+      const idTargaryen = 378;
+
+      let houses = [idStark, idBaratheon, idLannister, idTargaryen];
+      console.log(houses);
+
+      for (let i = 0; i < houses.length; i++) {
+
+        $("#houses").append(`<div class="col-3 casas" id="${houses[i]}"> <img width="75%" src="images/${houses[i]}.png"></div>`);
+        console.log(houses[i]);
+
+      }
+
+      $(".casas").on("click", function () {
+        const id = $(this).attr("id")
+
+        $.get(url + id, function (data) {
+
+          console.log(data)
+
+          $("#info").html("<h2>Detalles por casa: </h2> <br> <h4> Casa:  " + data.name + " <br>  Words:  " + data.words + "</h4>");
+
+          for (let i of data.titles) {
+            $("#info").append(`<h4><li>${i}</li></h4>`)
+          }
+
+
+        });
+
+
+      });
+
+    });
+
+  </script>
+</head>
+
+<style>
+
+body{
+
+  background: url(images/fondo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 900px;
+
+}
+
+#info{
+
+
+  background:linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(104,105,104,0.8379726890756303) 0%, rgba(0,212,255,0.6979166666666667) 0%);
+  color: white;
+}
+  
+</style>
+
+
+<body>
+
+  <div class="container">
+
+    <h1 class=" text-center my-4 p-3">Game of Thrones</h1>
+
+    <div class="row py-5  " id="houses">
+
+    </div>
+
+    <div class="text-center  py-5" id="info"></div>
+
+  </div>
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
